@@ -17,12 +17,12 @@ export default {
       page: 1
     }
   },
-  _props: {
-    _key: String
+  props: {
+    _searchResult: Object
   },
   computed: {
     pages () {
-      let searchResult = this._key
+      let searchResult = this._searchResult
       let searchResultItems = []
       for (let item in searchResult) {
         searchResultItems.push(searchResult[item])

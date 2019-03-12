@@ -8,7 +8,7 @@
           <v-tab-item v-for="(tab,i) in tabs" :key="i">
             <v-card flat class="pa-1">
               <!-- {{searchResult[tab.key]}} -->
-              <searchresultsTabContent :_key="tab.key"/>
+              <searchresultsTabContent :_searchResult="searchResult[tab.key].data.items"/>
             </v-card>
           </v-tab-item>
         </v-tabs-items>
