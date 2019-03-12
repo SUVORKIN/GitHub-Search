@@ -2,8 +2,8 @@
   <div>
     <searchResultItem v-for="(item,i) in pages[page-1]" :key="i" :_item="item"/>
     <v-container>
-      <div class="text-xs-center pb-3">
-        <v-pagination color="red" v-model="page" :length="pages.length"></v-pagination>
+      <div class="text-xs-center pb-3" v-if="showPagination">
+        <v-pagination total-visible="5" color="red" v-model="page" :length="pages.length"></v-pagination>
       </div>
     </v-container>
   </div>
@@ -11,22 +11,21 @@
 <script>
 import searchResultItem from '@/components/searchResultItem'
 export default {
-  name: 'searchresultsTabContent',
+  name: 'searchResultsTabContent',
   data () {
     return {
       page: 1
     }
   },
   props: {
-    _searchResult: Object
+    _searchResult: Array
   },
   computed: {
+    showPagination () {
+      return this.pages.length > 1
+    },
     pages () {
-      let searchResult = this._searchResult
-      let searchResultItems = []
-      for (let item in searchResult) {
-        searchResultItems.push(searchResult[item])
-      }
+      let searchResultItems = this._searchResult
       let pages = []
       let pageSize = 10
       let pagesCount = Math.ceil(searchResultItems.length / pageSize)

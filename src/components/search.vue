@@ -26,8 +26,9 @@ export default {
   },
   methods: {
     sendQuery () {
+      let date = new Date()
       let query = {
-        time: new Date().getHours() + ':' + new Date().getMinutes() + ':' + new Date().getSeconds(),
+        time: date.getHours() + ':' + date.getMinutes() + ':' + date.getSeconds(),
         text: this.query
       }
       this.$store.dispatch('getApiData', query)
