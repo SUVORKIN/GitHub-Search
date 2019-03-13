@@ -1,6 +1,14 @@
 <template>
-  <div>
-    <searchResultItem v-for="(item,i) in pages[page-1]" :key="i" :_item="item"/>
+  <div data-app>
+    <div @click.stop="openDetailsModal(item)" v-for="(item,i) in pages[page-1]" :key="i">
+      <searchResultItem :_item="item"/>
+    </div>
+    <v-dialog v-if="detailsModal" width="600" v-model="detailsModal">
+      <div>
+        <repoInfo :_repo="repoInfo" @closeModal="closeDetailsModal"/>
+      </div>
+    </v-dialog>
+    <v-divider v-if="showPagination"></v-divider>
     <v-container>
       <div class="text-xs-center pb-3" v-if="showPagination">
         <v-pagination total-visible="5" color="red" v-model="page" :length="pages.length"></v-pagination>
@@ -10,11 +18,14 @@
 </template>
 <script>
 import searchResultItem from '@/components/searchResultItem'
+import repoInfo from '@/components/repoInfo'
 export default {
   name: 'searchResultsTabContent',
   data () {
     return {
-      page: 1
+      page: 1,
+      detailsModal: false,
+      repoInfo: null
     }
   },
   props: {
@@ -43,8 +54,18 @@ export default {
       return pages
     }
   },
+  methods: {
+    openDetailsModal (repoInfo) {
+      this.repoInfo = repoInfo
+      this.detailsModal = true
+    },
+    closeDetailsModal () {
+      this.detailsModal = false
+    }
+  },
   components: {
-    searchResultItem
+    searchResultItem,
+    repoInfo
   }
 }
 </script>

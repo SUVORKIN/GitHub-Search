@@ -6,7 +6,7 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    searchResult: {},
+    searchResultArr: [],
     searchHistoryArr: [],
     isLoading: false
   },
@@ -15,12 +15,12 @@ export default new Vuex.Store({
       state[type] = val
     },
     saveResults (state, { query, response }) {
-      let resultKey = query.text + '/' + query.time
-      Vue.set(state.searchResult, resultKey, { query: query.text, data: response.data })
-      if (Object.keys(state.searchResult).length > 3) {
-        let properties = Object.entries(state.searchResult)
-        delete state.searchResult[properties[0][0]]
+      let searchResultArr = [...state.searchResultArr]
+      searchResultArr.unshift({ query: query.text, data: response.data })
+      if (searchResultArr.length > 3) {
+        searchResultArr.pop()
       }
+      state.searchResultArr = searchResultArr
     },
     saveHistory (state, { query, response }) {
       let historyItem = {
@@ -48,8 +48,8 @@ export default new Vuex.Store({
     }
   },
   getters: {
-    searchResult (state) {
-      return state.searchResult
+    searchResultArr (state) {
+      return state.searchResultArr
     },
     searchHistoryArr (state) {
       return state.searchHistoryArr

@@ -2,7 +2,7 @@
   <v-container>
     <v-layout justify-space-between>
       <v-flex class="text-xs-left">
-        <a href="/sa">{{_item.query}}</a>
+        {{_item.query}}
         - {{_item.time}}
       </v-flex>
       <v-flex class="text-xs-center" xs1>{{_item.resultsCount}}</v-flex>

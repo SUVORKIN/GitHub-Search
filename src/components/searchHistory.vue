@@ -2,13 +2,14 @@
   <v-expansion-panel v-if="historyItems.length">
     <v-expansion-panel-content>
       <template v-slot:header>
-        <div>История поиска</div>
+        <div>Search history</div>
       </template>
       <v-card>
         <searchHistoryItem v-for="(item,i) in historyItems" :key="i" :_item="item"/>
+        <v-divider></v-divider>
         <v-card-actions>
           <v-spacer></v-spacer>
-          <v-btn @click="clearHistory" color="red" flat dark>Очистить</v-btn>
+          <v-btn @click="clearHistory" color="red" depressed dark>Clear</v-btn>
         </v-card-actions>
       </v-card>
     </v-expansion-panel-content>
@@ -22,10 +23,6 @@ export default {
   computed: {
     historyItems () {
       let historyItems = this.$store.getters.searchHistoryArr
-      // let searchHistory = !this.isEmpty(this.$store.getters.searchHistory) ? this.$store.getters.searchHistory : JSON.parse(window.localStorage.searchHistory)
-      // for (let item in this.searchHistory) {
-      //   historyItems.push(this.searchHistory[item])
-      // }
       return historyItems || []
     }
   },
@@ -33,14 +30,6 @@ export default {
     clearHistory () {
       this.$store.dispatch('clearHistory')
     }
-    // isEmpty (obj) {
-    //   for (var key in obj) {
-    //     if (obj.hasOwnProperty(key)) {
-    //       return false
-    //     }
-    //   }
-    //   return true
-    // }
   },
   components: {
     searchHistoryItem
