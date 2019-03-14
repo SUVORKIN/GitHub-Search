@@ -8,7 +8,7 @@
           <v-tab v-for="(tab,i) in tabs" :key="i">{{ tab.query }}</v-tab>
           <v-tabs-items>
             <v-tab-item v-for="(tab,i) in tabs" :key="i">
-              <div class="pa-1">
+              <div>
                 <searchResultsTabContent :_searchResult="tab.data.items"/>
               </div>
             </v-tab-item>
