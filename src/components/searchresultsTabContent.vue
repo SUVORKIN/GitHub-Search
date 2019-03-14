@@ -1,5 +1,20 @@
 <template>
   <div data-app>
+    <v-layout justify-space-between>
+      <v-flex shrink>
+        <v-btn @click.stop="sortByName" flat fab small depressed>
+          <span v-if="nameSortType === 'asc'">A-z</span>
+          <span v-else>Z-a</span>
+        </v-btn>
+      </v-flex>
+      <v-flex class="text-xs-center" shrink>
+        <v-btn @click="sortByScore" flat fab small depressed>
+          <v-icon v-if="scoreSortType === 'desc'" dark>arrow_downward</v-icon>
+          <v-icon v-else dark>arrow_upward</v-icon>
+        </v-btn>
+      </v-flex>
+    </v-layout>
+    <v-divider/>
     <div @click.stop="openDetailsModal(item)" v-for="(item,i) in pages[page-1]" :key="i">
       <searchResultItem :_item="item"/>
     </div>
@@ -25,36 +40,71 @@ export default {
     return {
       page: 1,
       detailsModal: false,
-      repoInfo: null
+      repoInfo: null,
+      scoreSortType: 'desc',
+      nameSortType: 'asc',
+      searchResult: []
     }
   },
   props: {
     _searchResult: Array
+  },
+  created () {
+    this.searchResult = this._searchResult
   },
   computed: {
     showPagination () {
       return this.pages.length > 1
     },
     pages () {
-      let searchResultItems = this._searchResult
+      let searchResultItems = this.searchResult
       let pages = []
       let pageSize = 10
       let pagesCount = Math.ceil(searchResultItems.length / pageSize)
       let start = 0
       for (let i = 0; i <= pagesCount - 1; i++) {
         let page = []
-        for (let j = 0; j <= pageSize - 1; j++) {
-          if (searchResultItems[j + start]) {
-            page.push(searchResultItems[j + start])
-          }
-        }
-        start += pageSize - 1
+        page = searchResultItems.slice(start, start + pageSize)
+        start += pageSize
         pages.push(page)
       }
       return pages
     }
   },
   methods: {
+    sortByScore () {
+      this.toggleButton('scoreSortType')
+      this.searchResult = this.searchResult.sort((a, b) => {
+        if (this.scoreSortType === 'asc') {
+          return a.score - b.score
+        } else {
+          return b.score - a.score
+        }
+      })
+    },
+    sortByName () {
+      this.toggleButton('nameSortType')
+      if (this.nameSortType === 'asc') {
+        this.searchResult = this.searchResult.sort((a, b) => {
+          if (a.name.toLowerCase() > b.name.toLowerCase()) { return 1 }
+          if (a.name.toLowerCase() < b.name.toLowerCase()) { return -1 }
+          return 0
+        })
+      } else {
+        this.searchResult = this.searchResult.sort((a, b) => {
+          if (a.name.toLowerCase() < b.name.toLowerCase()) { return 1 }
+          if (a.name.toLowerCase() > b.name.toLowerCase()) { return -1 }
+          return 0
+        })
+      }
+    },
+    toggleButton (type) {
+      if (this[type] === 'asc') {
+        this[type] = 'desc'
+      } else {
+        this[type] = 'asc'
+      }
+    },
     openDetailsModal (repoInfo) {
       this.repoInfo = repoInfo
       this.detailsModal = true

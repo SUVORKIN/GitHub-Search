@@ -10,7 +10,7 @@
       <v-card-text>
         <v-layout justify-space-between>
           <v-flex class="text-xs-left">{{_item.name}}</v-flex>
-          <v-flex xs1>Starred: {{_item.stargazers_count}}</v-flex>
+          <v-flex xs1>Score: {{_item.score}}</v-flex>
         </v-layout>
       </v-card-text>
     </v-card>
@@ -24,11 +24,6 @@ export default {
     _item: {
       type: Object,
       default: null
-    }
-  },
-  computed: {
-    stars () {
-      return ''
     }
   }
 }
