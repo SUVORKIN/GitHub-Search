@@ -7,7 +7,7 @@
           <span v-else>Z-a</span>
         </v-btn>
       </v-flex>
-      <v-flex xs5>
+      <v-flex>
         <v-text-field box v-model="nameFilter" hide-details label="Filter by name"></v-text-field>
       </v-flex>
       <v-spacer></v-spacer>
