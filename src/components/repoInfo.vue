@@ -23,7 +23,7 @@
       </v-card-text>
       <v-card-actions>
         <v-layout justify-end>
-          <v-btn depressed color="red" dark @click="$emit('closeModal')">Закрыть</v-btn>
+          <v-btn depressed color="red" dark @click="$emit('closeModal')">Close</v-btn>
         </v-layout>
       </v-card-actions>
     </v-container>
