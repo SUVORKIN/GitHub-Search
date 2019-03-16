@@ -11,7 +11,7 @@
         <v-text-field box v-model="nameFilter" hide-details label="Filter by name"></v-text-field>
       </v-flex>
       <v-spacer></v-spacer>
-      <v-flex class="text-xs-center" shrink>
+      <v-flex class="text-xs-right" shrink>
         <v-btn @click="sortByScore" flat fab small depressed>
           <v-icon v-if="scoreSortType === 'desc'" dark>arrow_downward</v-icon>
           <v-icon v-else dark>arrow_upward</v-icon>

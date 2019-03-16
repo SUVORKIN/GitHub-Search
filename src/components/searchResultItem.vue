@@ -10,7 +10,7 @@
       <v-card-text>
         <v-layout justify-space-between>
           <v-flex class="text-xs-left">{{_item.name}}</v-flex>
-          <v-flex xs1>Score: {{_item.score}}</v-flex>
+          <v-flex class="text-xs-right" xs2>Score: {{Math.ceil(_item.score)}}</v-flex>
         </v-layout>
       </v-card-text>
     </v-card>
